@@ -118,7 +118,7 @@ def buildBinaryPackageStep(img, pkg, opts = '-b') {
     }
 }
 
-node('docker') {
+node {
     try{
         checkout scm
         git_commit['contrail-pipeline'] = git.getGitCommit()
