@@ -184,7 +184,7 @@ node {
             ).trim()
             def imgName = "${OS}-${DIST}-${ARCH}"
             def img
-            stage("build-source") {
+	    stage("prepare-docker-image") {
                 if (art) {
                     docker.withRegistry("${art.docker.proto}://in-dockerhub-${timestamp}.${art.docker.base}", "artifactory") {
                         // Hack to set custom docker registry for base image
@@ -219,7 +219,8 @@ node {
             	sh("mkdir src/contrail-web-core/node_modules")
     	        sh("cp -rf src/contrail-webui-third-party/node_modules/* src/contrail-web-core/node_modules/")
                 }
-
+	    }
+            stage("build-source") {
                 buildSteps = [:]
                 for (pkg in sourcePackages) {
                     buildSteps[pkg] = buildSourcePackageStep(img, pkg, version)
