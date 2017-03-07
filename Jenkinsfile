@@ -32,7 +32,7 @@ def debian = new com.mirantis.mk.Debian()
 
 // Define global variables
 def timestamp = common.getDatetime()
-def version = SOURCE_BRANCH.replace('R', '') + "~${timestamp}"
+def version = SOURCE_BRANCH.replace('R', '') + "+${timestamp}"
 
 def components = [
     ["contrail-build", "tools/build", SOURCE_BRANCH],
