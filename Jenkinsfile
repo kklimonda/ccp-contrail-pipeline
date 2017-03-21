@@ -19,6 +19,7 @@
  *   KEEP_REPOS             Always keep input repositories even on failure
  *   SOURCE_URL             URL to source code base (component names will be
  *                          appended)
+ *   SOURCE_OVERRIDE        An override repository, for pulling local changes.
  *   SOURCE_BRANCH          Branch of opencontrail to build
  *   SOURCE_CREDENTIALS     Credentials to use to checkout source
  */
@@ -35,23 +36,23 @@ def timestamp = common.getDatetime()
 def version = SOURCE_BRANCH.replace('R', '') + "+${timestamp}"
 
 def components = [
-    ["contrail-build", "tools/build", SOURCE_BRANCH],
-    ["contrail-controller", "controller", SOURCE_BRANCH],
-    ["contrail-vrouter", "vrouter", SOURCE_BRANCH],
-    ["contrail-third-party", "third_party", SOURCE_BRANCH],
-    ["contrail-generateDS", "tools/generateds", SOURCE_BRANCH],
-    ["contrail-sandesh", "tools/sandesh", SOURCE_BRANCH],
-    ["contrail-packages", "tools/packages", SOURCE_BRANCH],
-    ["contrail-nova-vif-driver", "openstack/nova_contrail_vif", SOURCE_BRANCH],
-    ["contrail-neutron-plugin", "openstack/neutron_plugin", SOURCE_BRANCH],
-    ["contrail-nova-extensions", "openstack/nova_extensions", SOURCE_BRANCH],
-    ["contrail-heat", "openstack/contrail-heat", SOURCE_BRANCH],
-    ["contrail-ceilometer-plugin", "openstack/ceilometer_plugin", "master"],
-    ["contrail-web-storage", "contrail-web-storage", SOURCE_BRANCH],
-    ["contrail-web-server-manager", "contrail-web-server-manager", SOURCE_BRANCH],
-    ["contrail-web-controller", "contrail-web-controller", SOURCE_BRANCH],
-    ["contrail-web-core", "contrail-web-core", SOURCE_BRANCH],
-    ["contrail-webui-third-party", "contrail-webui-third-party", SOURCE_BRANCH]
+    ["contrail-build", "tools/build", SOURCE_OVERRIDE, SOURCE_BRANCH],
+    ["contrail-controller", "controller", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-vrouter", "vrouter", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-third-party", "third_party", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-generateDS", "tools/generateds", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-sandesh", "tools/sandesh", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-packages", "tools/packages", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-nova-vif-driver", "openstack/nova_contrail_vif", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-neutron-plugin", "openstack/neutron_plugin", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-nova-extensions", "openstack/nova_extensions", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-heat", "openstack/contrail-heat", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-ceilometer-plugin", "openstack/ceilometer_plugin", SOURCE_URL, "master"],
+    ["contrail-web-storage", "contrail-web-storage", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-web-server-manager", "contrail-web-server-manager", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-web-controller", "contrail-web-controller", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-web-core", "contrail-web-core", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-webui-third-party", "contrail-webui-third-party", SOURCE_URL, SOURCE_BRANCH]
 ]
 
 def sourcePackages = [
@@ -131,8 +132,8 @@ node {
             for (component in components) {
                     git.checkoutGitRepository(
                         "src/${component[1]}",
-                        "${SOURCE_URL}/${component[0]}.git",
-                        component[2],
+                        "${component[2]}/${component[0]}.git",
+                        component[3],
                         SOURCE_CREDENTIALS,
                         true,
                         30,
