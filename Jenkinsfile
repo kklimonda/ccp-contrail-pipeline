@@ -41,7 +41,7 @@ def components = [
     ["contrail-vrouter", "vrouter", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-third-party", "third_party", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-generateDS", "tools/generateds", SOURCE_URL, SOURCE_BRANCH],
-    ["contrail-sandesh", "tools/sandesh", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-sandesh", "tools/sandesh", SOURCE_OVERRIDE, SOURCE_BRANCH],
     ["contrail-packages", "tools/packages", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-nova-vif-driver", "openstack/nova_contrail_vif", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-neutron-plugin", "openstack/neutron_plugin", SOURCE_URL, SOURCE_BRANCH],
