@@ -37,7 +37,7 @@ def version = SOURCE_BRANCH.replace('R', '') + "+${timestamp}"
 
 def components = [
     ["contrail-build", "tools/build", SOURCE_OVERRIDE, SOURCE_BRANCH],
-    ["contrail-controller", "controller", SOURCE_URL, SOURCE_BRANCH],
+    ["contrail-controller", "controller", SOURCE_OVERRIDE, SOURCE_BRANCH],
     ["contrail-vrouter", "vrouter", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-third-party", "third_party", SOURCE_URL, SOURCE_BRANCH],
     ["contrail-generateDS", "tools/generateds", SOURCE_URL, SOURCE_BRANCH],
